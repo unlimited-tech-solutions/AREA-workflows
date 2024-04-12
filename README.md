@@ -1,3 +1,36 @@
+# Repo status
+- Still under construction, open to feedback!
+
+
+
+# Creating a new project
+
+
+
+
+## Serverless Function/ Private App Gotchas: 
+
+- Folder Structure: private apps and serverless functions must match Hubspot's desired structure or otherwise won't build
+    - app.functions dir in src\app dir requires '.'
+    - app.json, crm-card.json, serverless.json and hsproject.json are all required
+
+- With Webhooks: payloads with multiple headers are filtered strangely through Hubspot in Serverless Functions
+    - Headers that appear in Postman are sometimes not accessible in Hubspot CRM and require workaround to recieve properly
+- Depending on the API, errors may need to be manually thrown after a catch block recieves them
+
+
+- Sometimes routes in the Hubspot API documentation/ examples are wrong and won't work if you copy/paste
+
+- Outputfields in Automated Workflows will stringify numbers and properties 
+
+
+
+
+
+
+
+
+
 # HubSpot Getting Started Project Template
 
 This is the Getting Started project for HubSpot developer projects. It contains a private app, a CRM card written in React, and a serverless function that the CRM card is able to interact with. This code is intended to help developers get up and running with developer projects quickly and easily.
