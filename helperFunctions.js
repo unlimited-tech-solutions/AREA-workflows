@@ -8,7 +8,7 @@ const hubSpotClient = new hubspot.Client({ accessToken: process.env.HUBKEY })
 
 //making a graphQl call
 
-export const makeGraphQlCall = () => {
+async function makeGraphQlCall(){
 
 }
 
@@ -196,7 +196,9 @@ async function createHSDealAxios(){
   }
 
   //client based
+  async function createHSDealClient(){
 
+  }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 // Retrieving Hubspot Deals
@@ -336,9 +338,10 @@ async function createHSLineItem(dealId){
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-    //Associating Records
+    // Associating Records
 
-    //Contact to Deal Association creation
+    // Contact to Deal Association creation
+    // Client based
     async function associateContactDeal(contactId, dealId){
         //toObjectType is the target we are associating to
         const objectType = "contacts";
@@ -362,3 +365,10 @@ async function createHSLineItem(dealId){
             : console.error(e)
         }
       }
+
+
+
+      //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+      // Calls
+      readLineItemsFromDeal(12570291692)

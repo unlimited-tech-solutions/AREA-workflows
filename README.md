@@ -16,6 +16,7 @@
 
 - With Webhooks: payloads with multiple headers are filtered strangely through Hubspot in Serverless Functions
     - Headers that appear in Postman are sometimes not accessible in Hubspot CRM and require workaround to recieve properly
+
 - Depending on the API, errors may need to be manually thrown after a catch block recieves them
 
 
@@ -23,7 +24,9 @@
 
 - Outputfields in Automated Workflows will stringify numbers and properties 
 
-
+- Properties from webhook payloads on workflow webhook event triggers are not directly accessible to custom code blocks: 
+    - properties can be made accessible with the format data workflow block (same page as custom code block)
+    - properties can also be set to a record and retrieved via that record
 
 
 
