@@ -21,7 +21,9 @@ async function makeGraphQlCall(){
 
 
 //axios based request
-
+async function axiosCreateHSContact(){
+  
+}
 
 
 
