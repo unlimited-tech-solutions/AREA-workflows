@@ -5,6 +5,13 @@
 
 # Creating a new project
 
+### Steps 
+0. create new repository by the naming convention, copy that name and use it for subsequent procesii
+1. git clone https://github.com/unlimited-tech-solutions/unlimited-serverless-template.git
+2. POWERSHELL: Rename-Item "unlimited-serverless-template" "NewClient-Serverless-DemoCard"
+3. cd .\NewClient-Serverless-DemoCard\
+4. git remote set-url origin https://github.com/unlimited-tech-solutions/NewClient-Serverless-DemoCard.git
+5. git push origin
 
 
 
