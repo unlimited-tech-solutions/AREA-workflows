@@ -1,3 +1,4 @@
+
 # Welcome to HubSpot Serverless template created by UnlimitedTechSolutions
 
 Hello and welcome to the guidelines and best practicies to developing a new HubSpot project!  
@@ -254,3 +255,4 @@ The HubSpot CLI enables you to run this project locally so that you may test and
 ## Repo status
 
 - Still under construction, open to feedback!
+
