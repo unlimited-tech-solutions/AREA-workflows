@@ -1,47 +1,176 @@
-# Repo status
-- Still under construction, open to feedback!
+# Welcome to HubSpot Serverless template created by UnlimitedTechSolutions
 
+Hello and welcome to the guidelines and best practicies to developing a new HubSpot project!  
 
+These guideliness make code more readable, allow for better async dev work and will help development be more streamlined.
 
-# Creating a new project
+## Local Folder Structure
 
-### Steps 
-0. create new repository by the naming convention, copy that name and use it for subsequent procesii
-1. git clone https://github.com/unlimited-tech-solutions/unlimited-serverless-template.git
-2. POWERSHELL: Rename-Item "unlimited-serverless-template" "NewClient-Serverless-DemoCard"
-3. cd .\NewClient-Serverless-DemoCard\
-4. git remote set-url origin https://github.com/unlimited-tech-solutions/NewClient-Serverless-DemoCard.git
-5. git push origin
+These guidelines advice that localy, work for every client should live under UTS root folder, and every project for that client should be a separate subfolder.  
+But moreover every subfolder must be independently versioned, meaning that each subfolder is a repository in itself.  
 
+📦UTS  
+ ┣ 📂unlimited  
+ ┃ ┣ 📂unlimited-serverless-demoProject  
+ ┃ ┣ 📂[unlimited-serverless-template](https://github.com/unlimited-tech-solutions/unlimited-serverless-template)  
+ ┃ ┗ 📂unlimited-workflows  
+ ┣ 📂rebeccaBlack  
+ ┃ ┣ 📂rebeccaBlack-serverless-friday  
+ ┃ ┗ 📂rebeccaBlack-workflows  
+ ┗ 📂zelda  
+ ┃ ┣ 📂zelda-karana-majorasMask  
+ ┃ ┣ 📂zelda-serverless-breathOfTheWild  
+ ┃ ┗ 📂zelda-serverless-linksAwakening  
 
+## UTS Style Guide
 
-## Serverless Function/ Private App Gotchas: 
+1. Use const at top of file w/ screaming snake case (e.g. HUBSPOT_ACCOUNT_ID=123123123)
+2. Use prettier extension with provided .prettierrc file
+3. Never use fetch or hubspot client, always axios (example functions provided in src\app\UTSHelpers\functions\..)
+4. Avoid callback hell, never use ❌.then, ✔️ async ✔️ await all day
+5. Try/catch for error handling (goes along with previous)\
+   ![alt text](uts/tryCatch.png)
+6. require over import\
+   ![alt text](uts/require.png)
+7. No hardcoded secrets → use .env file, and invoke when needed via E.g. process.env.PRIVATE_APP_ACCESS_TOKEN
+8. Code needs to run in production and in sandbox without changing anything, use logic to load proper tokens as for HubSpot so for external platforms\
+   ![alt text](uts/logic.png)
+9. Include comments in code, explain sections as necessary
+
+## Creating a new serverless project - HowTo
+
+### Overview
+
+One should create a new repository for each project, as already established.  
+
+Start by creating new repository by the naming convention provided below,  
+> Note: All github repositories should follow this structure  
+
+\<clientName\>-\<projectType\>-\<projectName\>  
+
+where projectType is oneOf:
+
+1. workflows
+1. karana
+1. serverless
+
+Replace `<clientName>-<projectType>-<projectName>` with the actual project naming convention as per your requirement.
+
+### Steps to  (PowerShell)
+
+To automate the process of cloning a GitHub this repository, renaming it, setting a new remote URL, and pushing to the new remote, follow these steps (you can copy paste this whole code block into powershell, and you will need one extra "ENTER" after you confirm the repo name):
+
+1. **Open PowerShell.**
+1. **Navigate to the client folder**
+1. **Copy → Paste everything in PowerShell:**
+1. **You will be promted to enter the name of the newly created repo. You can copy paste from github for good measure. Confirm**
+
+    ```powershell
+    # Step 1: Enter the repository name
+    $RepositoryName = Read-Host "Enter the repository name"
+
+    # Step 2: Confirm the name
+    $response = Read-Host "Confirm the new name: '$RepositoryName'. Proceed? (Yes|yes|y / No)"
+
+    if ($response -notmatch "^(Yes|yes|y)$") {
+        Write-Host "Aborting the git clone"
+    } else {
+        # Step 3: Clone the repository
+        git clone https://github.com/unlimited-tech-solutions/unlimited-serverless-template.git
+
+        # Step 4: Rename the cloned directory into new repository name
+        Rename-Item "unlimited-serverless-template" $RepositoryName
+
+        # Step 5: CD into folder
+        cd ".\$RepositoryName\"
+
+        # Step 6: Set the new remote URL
+        git remote set-url origin "https://github.com/unlimited-tech-solutions/$RepositoryName.git"
+
+        # Step 7: Rename README.md to UTSGuideliness.md
+        Rename-Item "README.md" "UTSGuidelines.md"
+
+        # Step 8: Rename empty-readme-template.md to README.md
+        Rename-Item "empty-readme-template.md" "README.md"
+
+        # Step 9: Create .env file with the specified content
+        $envContent = @"
+    # The only reason you would use these separately and not loaded depending the sandbox or production
+    # Is if you have access_token and refresh_token for some external platform stored in Integration record in production
+    # So both DEV and PROD needs to fetch the data from the PROD Integration record
+    PRIVATE_APP_ACCESS_TOKEN_PROD=pat-na1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
+    PRIVATE_APP_ACCESS_TOKEN_DEV=pat-na1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
+
+    # The token of either SANDBOX or PRODUCTION depending against what you are running `hs project dev` 
+    PRIVATE_APP_ACCESS_TOKEN=pat-na1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
+    "@
+
+        Set-Content -Path ".env" -Value $envContent
+
+        # Step 10: Stage all changes
+        git add .
+
+        # Step 11: Commit changes
+        git commit -m "Initial commit"
+
+        # Step 12: Push to the new remote
+        git push origin
+    }
+    ```
+
+## Project Strucutre
+
+This project was spun up by running
+
+```powershell
+hs project create
+```
+
+but it has more than what HubSpot provides:
+
+1. UTSHelper folder
+
+## UTSHelpers folder
+
+One can find many helpfull functions and common components in this folder\
+![here](uts\takethis.png)
+
+📦src\
+ ┗ 📂app\
+ ┃ ┣ 📂app.functions\
+ ┃ ┃ ┣ ...\
+ ┃ ┣ 📂extensions\
+ ┃ ┃ ┣ ...\
+ ┃ ┣ 📂UTSHelpers  \
+ ┃ ┃ ┗ 📂functions\
+ ┃ ┃ ┃ ┗ 📂hubSpot\
+ ┃ ┃ ┃ ┃ ┣ 📂graphQL\
+ ┃ ┃ ┃ ┃ ┣ 📂v3\
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜patchRecord.js\
+ ┃ ┃ ┃ ┃ ┃ ┗ ...
+ ┃ ┃ ┃ ┃ ┗ 📂v4\
+ ┃ ...
+
+## Serverless Function/ Private App Gotchas:
 
 - Folder Structure: private apps and serverless functions must match Hubspot's desired structure or otherwise won't build
-    - app.functions dir in src\app dir requires '.'
-    - app.json, crm-card.json, serverless.json and hsproject.json are all required
+- app.functions dir in src\app dir requires '.'
+- app.json, crm-card.json, serverless.json and hsproject.json are all required
 
 - With Webhooks: payloads with multiple headers are filtered strangely through Hubspot in Serverless Functions
-    - Headers that appear in Postman are sometimes not accessible in Hubspot CRM and require workaround to recieve properly
+- Headers that appear in Postman are sometimes not accessible in Hubspot CRM and require workaround to recieve properly
 
 - Depending on the API, errors may need to be manually thrown after a catch block recieves them
-
 
 - Sometimes routes in the Hubspot API documentation/ examples are wrong and won't work if you copy/paste
 
 - Outputfields in Automated Workflows will stringify numbers and properties 
 
-- Properties from webhook payloads on workflow webhook event triggers are not directly accessible to custom code blocks: 
-    - properties can be made accessible with the format data workflow block (same page as custom code block)
-    - properties can also be set to a record and retrieved via that record
+- Properties from webhook payloads on workflow webhook event triggers are not directly accessible to custom code blocks:
+  - properties can be made accessible with the format data workflow block (same page as custom code block)
+  - properties can also be set to a record and retrieved via that record
 
-
-
-
-
-
-
-# HubSpot Getting Started Project Template
+## HubSpot Getting Started Project Template
 
 This is the Getting Started project for HubSpot developer projects. It contains a private app, a CRM card written in React, and a serverless function that the CRM card is able to interact with. This code is intended to help developers get up and running with developer projects quickly and easily.
 
@@ -58,3 +187,7 @@ There are a few things that must be set up before you can make use of this getti
 The HubSpot CLI enables you to run this project locally so that you may test and iterate quickly. Getting started is simple, just run this HubSpot CLI command in your project directory and follow the prompts:
 
 `hs project dev`
+
+## Repo status
+
+- Still under construction, open to feedback!
