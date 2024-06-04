@@ -118,7 +118,7 @@ To automate the process of cloning a GitHub this repository, renaming it, settin
     }
     ```
 
-## Project Strucutre
+## Serverless Project Strucutre
 
 This project was spun up by running
 
@@ -150,6 +150,69 @@ One can find many helpfull functions and common components in this folder\
  ┃ ┃ ┃ ┃ ┃ ┗ ...
  ┃ ┃ ┃ ┃ ┗ 📂v4\
  ┃ ...
+
+## Auto Deploy/Build into HubSpot Project
+
+### Summary
+
+Do work localy via `hs project dev` and push serverless with `hs project upload` when needed  
+`git add .` and `git commit` localy to track progress, `git squash` if many commits before `git push origin`  
+At the end of the day, push your work to github (Either main or dev), which will trigger auto build to HubSpot  
+
+### Auto Bilds (GitHub → HubSpot)
+
+1. main and dev are mandatory
+1. deploying to main should auto build to hubspot production
+1. deploying to dev should auto build to hubspot sandbox
+1. merge or push to main is allowed
+1. if multiple sandboxes name branch dev_sandboxName1 dev_sandboxName2
+1. create feature branches as needed
+
+Below is a diagram example of branche structure of a git.
+
+```Mermaid
+flowchart TD
+    dev_c1-->fb_c1
+
+    subgraph feature branch
+    fb_c1[feature commit 1]-->fb_c2[feature commit 2]
+    fb_c2-->fb_c3[feature commit 3]
+    end
+
+    
+    main_initial-->dev_c1
+
+    subgraph dev
+    dev_c1[dev commit 1]-->dev_c2[dev commit 2]
+    dev_c2-->dev_merge[merge into dev]
+    fb_c3-->dev_merge
+    dev_merge-->dev_c3[dev commit 3]
+    end
+
+    subgraph main
+    main_initial[Initial commit]-->main_merge[merge into main]
+    dev_c3-->main_merge
+    end
+```
+
+### Git Commit Thought Process
+
+1. Keep commit messages usefull and descriptive  
+1. Use present tense ("add types to user" vs "added types to user") for you want to apply that commit to "add types to user" that feature not to "added types to user" that feature  
+1. Let commit history tell a story, do as much commits as needed  
+1. But, no one needs commits "add fix to navbar" "really add fix to navbar" "now fix is real", do a `git squash 3 -m "add fix to navbar"` to those before `git push origin`
+
+```Mermaid
+flowchart TD
+    c1[hs project dev \n MAKE CHANGES LOCALY]-->c2[git add . \n git commit -m 'fix bug' \n hs project upload]
+    c2-->c3{End for the day?}
+    c3-- NO -->c1
+    c3-- YES --> c4{Too many commits?}
+    c4-- YES --> c5[git suqash N]
+    c5 --> c6
+    c4-- NO --> c6[git add . \n git commit -m 'fix bug' \n git push origin]
+
+```
 
 ## Serverless Function/ Private App Gotchas:
 
