@@ -171,7 +171,7 @@ At the end of the day, push your work to github (Either main or dev), which will
 
 Below is a diagram example of branche structure of a git.
 
-```Mermaid
+```mermaid
 flowchart TD
     dev_c1-->fb_c1
 
@@ -203,7 +203,7 @@ flowchart TD
 1. Let commit history tell a story, do as much commits as needed  
 1. But, no one needs commits "add fix to navbar" "really add fix to navbar" "now fix is real", do a `git squash 3 -m "add fix to navbar"` to those before `git push origin`
 
-```Mermaid
+```mermaid
 flowchart TD
     c1[hs project dev \n MAKE CHANGES LOCALY]-->c2[git add . \n git commit -m 'fix bug' \n hs project upload]
     c2-->c3{End for the day?}
