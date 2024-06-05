@@ -28,7 +28,7 @@ But moreover every subfolder must be independently versioned, meaning that each 
 1. Use const at top of file w/ screaming snake case (e.g. HUBSPOT_ACCOUNT_ID=123123123)
 2. Use prettier extension with provided .prettierrc file
 3. Never use fetch or hubspot client, always axios (example functions provided in src\app\UTSHelpers\functions\..)
-4. Avoid callback hell, never use ❌.then, ✔️ async ✔️ await all day
+4. Avoid callback hell, do not chain nested calls with ❌.then, use ✔️ async ✔️ await (when possible) all day
 5. Try/catch for error handling (goes along with previous)\
    ![alt text](uts/tryCatch.png)
 6. require over import\
@@ -209,7 +209,7 @@ flowchart TD
     c2-->c3{End for the day?}
     c3-- NO -->c1
     c3-- YES --> c4{Too many commits?}
-    c4-- YES --> c5[git suqash N]
+    c4-- YES --> c5[git squash N]
     c5 --> c6
     c4-- NO --> c6[git add . \n git commit -m 'fix bug' \n git push origin]
 

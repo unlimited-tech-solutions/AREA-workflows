@@ -60,7 +60,7 @@
 Code blocks:
 - a list of code blocks for the workflow to help understand what each block is supposed to be doing
 - I take the steps from the numbered workflow section and break them down into these code blocks
-- [ ] <-- using check boxes for each code block to help keep track of development progress (in Obsidian and other note taking apps these brackets become check boxes)
+- [x] <-- using check boxes for each code block to help keep track of development progress (in Obsidian and other note taking apps these brackets become check boxes)
 
 
 Testing: 
