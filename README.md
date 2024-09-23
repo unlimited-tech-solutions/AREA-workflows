@@ -14,6 +14,7 @@ But moreover every subfolder must be independently versioned, meaning that each 
  ┣ 📂unlimited  
  ┃ ┣ 📂unlimited-serverless-demoProject  
  ┃ ┣ 📂[unlimited-serverless-template](https://github.com/unlimited-tech-solutions/unlimited-serverless-template)  
+ ┃ ┣ 📂[unlimited-karana-template](https://github.com/unlimited-tech-solutions/unlimited-karana-template)  
  ┃ ┗ 📂unlimited-workflows  
  ┣ 📂rebeccaBlack  
  ┃ ┣ 📂rebeccaBlack-serverless-friday  
